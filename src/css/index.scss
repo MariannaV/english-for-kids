@@ -1,1 +1,226 @@
 @import 'helpers/postcss-reset/mobile.css';
+
+
+/*----------BASIC----------*/
+.wrapper-container {
+  /*  max-width: 1000px;*/
+  padding: 40px;
+  margin: 0 auto;
+}
+
+/*----------HEADER----------*/
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+label[for="toggle-menu"] {
+  position: relative;
+  z-index: 3;
+  cursor: pointer;
+}
+
+#toggle-menu {
+  display: none;
+  &:checked {
+
+    & + label[for="toggle-menu"] .toggle-menu-label {
+      > line {
+        transition: transform .3s, opacity .3s;
+
+        &:first-child {
+          transform: rotate(45deg) translate(2px, -2px);
+        }
+
+        &:nth-child(2) {
+          opacity: 0;
+        }
+
+        &:nth-child(3) {
+          transform: rotate(-45deg) translate(-13px, -4px);
+        }
+      }
+    }
+  }
+  &:not(:checked) {
+    & ~ .header-navigation {
+      left: -100%;
+    }
+
+  }
+}
+
+
+
+
+.toggle-menu-label {
+  & > line {
+    stroke-width: 1.5;
+    stroke: gray;
+  }
+}
+
+.header-navigation {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 380px;
+  min-height: 100vh;
+  padding: 125px 50px 50px;
+  color: white;
+  background-color: orange;
+  transition: left .5s ease;
+  z-index: 2;
+  & > a + a {
+    margin-top: 15px;
+  }
+}
+
+.toggle-button-container {
+  position: relative;
+  top: 0;
+  right: 0;
+}
+
+.toggle-button-block {
+  padding: 5px 10px;
+  border: 1px solid gray;
+  border-radius: 3px;
+
+
+  &::before {
+    content: "Train";
+  }
+
+  &::after {
+    opacity: 0;
+    content: "Play";
+  }
+
+  &::before, &::after {
+    text-transform: uppercase;
+  }
+
+}
+
+#toggle-button {
+  display: none;
+
+  &:checked ~ .toggle-button-block {
+    &::after {
+      opacity: 1;
+    }
+
+    &::before {
+      opacity: 0;
+    }
+  }
+
+  &:checked ~ .toggle-button-handle {
+    left: 4px;
+    /*right: 4px;*/
+  }
+}
+
+.toggle-button-handle {
+  position: absolute;
+  top: 4px;
+  left: calc(100% - 25px);
+  width: 20px;
+  height: 20px;
+  background-color: #1ccacd;
+  border-radius: 3px;
+  transition: left .3s, right .3s;
+}
+
+/*----------MAIN PAGE: CARDS----------*/
+.categories-container{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  grid-gap: 20px;
+  justify-content: space-around;
+  padding: 40px 0;
+}
+
+.category-card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  height: 280px;
+  border: 1px solid darkgray;
+
+  &>img{
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 10px solid #fff;
+      object-fit: cover;
+      margin: 30px auto;
+  }
+}
+
+
+/*----------CONTENT PAGES----------*/
+.set-card {
+  position: relative;
+  width: 300px;
+  height: 250px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .4);
+  perspective: 1000px;
+  & .back {
+    transform: rotateY(180deg);
+  }
+  & .front, & .back {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: 1s;
+    backface-visibility: hidden;
+    & > p{
+      margin: 0 auto;
+    }
+  }
+  &:hover .front {
+    transform: rotateY(180deg);
+  }
+  &:hover .back {
+    transform: rotateY(360deg);
+  }
+   & img {
+    max-width: 100%;
+  }
+
+
+/*  .card-bottom {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;*/
+
+    /*
+
+    & > p {
+      margin: 0 auto;
+    }
+    */
+
+  .rotate-block {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 25px;
+    height: 25px;
+    background-image: url("../img/icons/rotate-icon.svg");
+    background-size: cover;
+  }
+
+}

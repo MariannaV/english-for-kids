@@ -1,7 +1,165 @@
 include ../components/head/head
+include ../components/header/header.pug
+
+mixin card(data)
+    a.category-card(href="#")
+        img(src=data.src)
+        p #{data.text}
+
+mixin set-card(data)
+    .set-card
+        .front
+            img(src=data.imgFront)
+            p #{data.textFront}
+            .rotate-block
+        .back
+            img(src=data.imgBack)
+            p #{data.textBack}
+
 
 doctype html
 html(lang="ru")
-    +head({ "title": "Главная", "description": "Главная страница" })
+    +head({"title": "Главная", "description": "Главная страница"})
         link(rel="stylesheet" href="styles/index.css")
     body.page-home
+        .wrapper-container
+            +header()
+            main(id='contentContainer')
+                .categories-container.main-container
+                    +card({
+                        src: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        text: "Action (set A)",
+                        setId: 'action-0',
+                        page: 'set'
+                    })
+                    +card({
+                        src: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        text: "Action (set B)"
+                    })
+                    +card({
+                        src: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        text: "Action (set C)"
+                    })
+                    +card({
+                        src: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        text: "Adjective",
+                        setId: 'adjective-0'
+                    })
+                    +card({
+                        src: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        text: "Animal (set A)"
+                    })
+                    +card({
+                        src: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        text: "Animal (set B)"
+                    })
+                    +card({
+                        src: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        text: "Clothes"
+                    })
+                    +card({
+                        src: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        text: "Emotion"
+                    })
+                .categories-container
+                    +set-card({
+                        imgFont: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        textFront: "cry",
+                        imgBack: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        textBack: "плакать"
+                    })
+                    +set-card({
+                        imgFront: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        textFront: "dance",
+                        imgBack: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        textBack: "танцевать"
+                    })
+                    +set-card({
+                        imgFront: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        textFront: "dive",
+                        imgBack: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        textBack: "нырять"
+                    })
+                    +set-card({
+                        imgFront: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        textFront: "draw",
+                        imgBack: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        textBack: "рисовать"
+                    })
+                    +set-card({
+                        imgFront: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        textFront: "fish",
+                        imgBack: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        textBack: "ловить рыбу"
+                    })
+                    +set-card({
+                        imgFront: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        textFront: "fly",
+                        imgBack: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        textBack: "летать"
+                    })
+                    +set-card({
+                        imgFront: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        textFront: "hug",
+                        imgBack: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        textBack: "обнимать"
+                    })
+                    +set-card({
+                        imgFront: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        textFront: "jump",
+                        imgBack: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                        textBack: "прыгать"
+
+                    })
+
+    script.
+        window.onpopstate = function () {
+            console.log(history.state)
+            const {setId} = history.state
+            const {contentContainer} = window
+            let fragment = document.createDocumentFragment();
+
+            if (setId)
+                fragment.appendChild(cardsCreate())
+            else {
+                //recreate main page
+            }
+
+            contentContainer.innerHTML = ''
+            contentContainer.append(fragment)
+        };
+
+        function cardsCreate() {
+            const cardsContainer = document.createElement('div')
+            cardsContainer.classList.add('categories-container');
+            const {setId} = history.state;
+            //TODO: get by setID dataOfSet (Array | Map) and dataOfSet.forEach
+            ['Firefox', 'Chrome', 'Opera', 'Safari', 'Internet Explorer'].forEach(function (browser) {
+                //TODO: get cardData by id
+                const cardData = {
+                    imgFront: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                    textFront: "cry",
+                    imgBack: "https://english-for-kids.netlify.com/static/media/dance.c70cc103.jpg",
+                    textBack: "плакать"
+                }
+                cardsContainer.appendChild(cardCreate(cardData));
+            });
+            return cardsContainer
+        }
+
+        function cardCreate(data) {
+            const card = document.createElement('div');
+            card.classList.add('set-card')
+            card.insertAdjacentHTML("beforeend", `
+               <div class='front'>
+                   <img src=${data.imgFront}/>
+                   <p>${data.textFront}</p>
+                   <div class='rotate-block'></div>
+               </div>
+               <div class="back">
+                   <img src=${data.imgBack} />
+                   <p>${data.textBack}</p>
+               </div>
+         `)
+            return card
+        }
