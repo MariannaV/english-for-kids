@@ -1,6 +1,6 @@
 mixin header-link(data)
-    - const { setId, text } = data
-    a.header-link(href="#" onclick=`history.pushState(${JSON.stringify({ setId })}, "${text}")`) #{text}
+    - const { setId, text: setName } = data
+    a.header-link(onclick=`navigateToSet(event, ${JSON.stringify({setId, setName})})`) #{setName}
 
 mixin header()
     header
@@ -13,15 +13,15 @@ mixin header()
         nav.header-navigation
             +header-link({text: "Main Page"})
             +header-link({text: "Action (Set A)", setId: 'action-0'})
-            +header-link({text: "Action (Set B)"})
-            +header-link({text: "Action (Set C)"})
-            +header-link({text: "Adjective"})
-            +header-link({text: "Animal (Set A)"})
-            +header-link({text: "Animal (Set A)"})
-            +header-link({text: "Clothes"})
-            +header-link({text: "Emotion"})
+            +header-link({text: "Action (Set B)", setId: 'action-1'})
+            +header-link({text: "Action (Set C)", setId: 'action-2'})
+            +header-link({text: "Adjective", setId: 'adjective'})
+            +header-link({text: "Animal (Set A)", setId: 'animal-0'})
+            +header-link({text: "Animal (Set B)", setId: 'animal-1'})
+            +header-link({text: "Clothes", setId: 'clothes-0'})
+            +header-link({text: "Emotion", setId: 'emotion-0'})
         .toggle-button-container
             label(for="toggle-button")
                 input(id="toggle-button" type="checkbox")
-                .toggle-button-block
+                .toggle-button-block.green(onclick='toggleThemes(this)' data-on='train' data-off='play')
                 .toggle-button-handle

@@ -22,6 +22,7 @@ label[for="toggle-menu"] {
 
 #toggle-menu {
   display: none;
+
   &:checked {
 
     & + label[for="toggle-menu"] .toggle-menu-label {
@@ -42,15 +43,14 @@ label[for="toggle-menu"] {
       }
     }
   }
+
   &:not(:checked) {
     & ~ .header-navigation {
-      left: -100%;
+      transform: translate(-100%);
     }
 
   }
 }
-
-
 
 
 .toggle-menu-label {
@@ -58,6 +58,14 @@ label[for="toggle-menu"] {
     stroke-width: 1.5;
     stroke: gray;
   }
+}
+
+.play .header-navigation {
+  background: linear-gradient(40deg, #ffd86f, #fc6262);
+}
+
+.train .header-navigation {
+  background: linear-gradient(40deg, #00bf82, #0099ae);
 }
 
 .header-navigation {
@@ -72,8 +80,14 @@ label[for="toggle-menu"] {
   padding: 125px 50px 50px;
   color: white;
   background-color: orange;
-  transition: left .5s ease;
+  transition: transform .5s cubic-bezier(.77, .2, .05, 1);
   z-index: 2;
+
+  & > a {
+    font-size: 24px;
+    cursor: pointer;
+  }
+
   & > a + a {
     margin-top: 15px;
   }
@@ -85,19 +99,27 @@ label[for="toggle-menu"] {
   right: 0;
 }
 
+.train .toggle-button-block {
+  background: linear-gradient(40deg, #00bf82, #0099ae);
+}
+
+.play .toggle-button-block {
+  background: linear-gradient(40deg, #ffd86f, #fc6262);
+}
+
 .toggle-button-block {
   padding: 5px 10px;
   border: 1px solid gray;
   border-radius: 3px;
-
+  cursor: pointer;
 
   &::before {
-    content: "Train";
+    content: attr(data-on);
   }
 
   &::after {
     opacity: 0;
-    content: "Play";
+    content: attr(data-off);
   }
 
   &::before, &::after {
@@ -121,7 +143,6 @@ label[for="toggle-menu"] {
 
   &:checked ~ .toggle-button-handle {
     left: 4px;
-    /*right: 4px;*/
   }
 }
 
@@ -134,10 +155,11 @@ label[for="toggle-menu"] {
   background-color: #1ccacd;
   border-radius: 3px;
   transition: left .3s, right .3s;
+  pointer-events: none;
 }
 
 /*----------MAIN PAGE: CARDS----------*/
-.categories-container{
+.categories-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, 300px);
   grid-gap: 20px;
@@ -145,35 +167,74 @@ label[for="toggle-menu"] {
   padding: 40px 0;
 }
 
-.category-card{
+.train .category-card {
+  background: linear-gradient(180deg, #0099ae, #00bf82 40%, #fff 0, #fff);
+}
+
+.play .category-card {
+  background: linear-gradient(180deg, #fd6a63, #feb46b 40%, #fff 0, #fff);
+}
+
+.category-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 300px;
   height: 280px;
-  border: 1px solid darkgray;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+  cursor: pointer;
+  transition: box-shadow 0.3s;
 
-  &>img{
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      border: 10px solid #fff;
-      object-fit: cover;
-      margin: 30px auto;
+  &:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .4);
+  }
+
+  & > img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 10px solid #fff;
+    object-fit: cover;
+    margin: 30px auto;
   }
 }
 
 
 /*----------CONTENT PAGES----------*/
+.play .set-card {
+  //border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .4);
+  cursor: pointer;
+
+  &.inactive {
+    filter: opacity(0.5);
+  }
+
+  & .front {
+    & > img {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    & > p, div {
+      display: none;
+    }
+  }
+}
+
 .set-card {
   position: relative;
   width: 300px;
   height: 250px;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .4);
   perspective: 1000px;
+
+
   & .back {
     transform: rotateY(180deg);
   }
+
   & .front, & .back {
     position: absolute;
     top: 0;
@@ -186,32 +247,29 @@ label[for="toggle-menu"] {
     background-repeat: no-repeat;
     transition: 1s;
     backface-visibility: hidden;
-    & > p{
-      margin: 0 auto;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .4);
+    &:hover {
+      box-shadow: 0 10px 20px rgba(0, 0, 0, .4);
     }
-  }
-  &:hover .front {
-    transform: rotateY(180deg);
-  }
-  &:hover .back {
-    transform: rotateY(360deg);
-  }
-   & img {
-    max-width: 100%;
-  }
-
-
-/*  .card-bottom {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;*/
-
-    /*
 
     & > p {
       margin: 0 auto;
     }
-    */
+  }
+
+
+  &.rotate .front {
+    transform: rotateY(180deg);
+  }
+
+  &.rotate .back {
+    transform: rotateY(360deg);
+  }
+
+  & img {
+    max-width: 100%;
+  }
+
 
   .rotate-block {
     position: absolute;
@@ -221,6 +279,40 @@ label[for="toggle-menu"] {
     height: 25px;
     background-image: url("../img/icons/rotate-icon.svg");
     background-size: cover;
+    cursor: pointer;
   }
 
+}
+
+.button {
+  margin: 0 auto;
+  padding: 20px;
+  color: white;
+  border: 1px solid #ffd86f;
+  outline: none;
+  cursor: pointer;
+}
+
+.play .game-button {
+  display: flex;
+
+}
+
+.game-button {
+  display: none;
+  font-size: 24px;
+  border-radius: 4px;
+  background: linear-gradient(40deg, #ffd86f, #fc6262);
+}
+
+.play .repeat-button {
+  display: flex;
+  width: 65px;
+  height: 65px;
+  font-size: 0;
+  border-radius: 50%;
+  background-image: url("../img/icons/repeat.svg"), linear-gradient(40deg, #ffd86f, #fc6262);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40px, cover;
 }
