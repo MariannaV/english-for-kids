@@ -36,6 +36,14 @@ gulp.task('img', () =>
     .pipe(gulp.dest('public/img/'))
 );
 
+gulp.task('assets', () =>
+    gulp
+        .src('src/assets/**/*.*')
+        .pipe(plumber({ errorHandler: notify.onError('ASSETS: <%= error.message %>') }))
+        .pipe(newer('public/assets/'))
+        .pipe(gulp.dest('public/assets/'))
+);
+
 const postcss = require('gulp-postcss'),
   sourcemaps = require('gulp-sourcemaps'),
   rename = require('gulp-rename');
@@ -137,7 +145,7 @@ gulp.task('reload', done => {
   done();
 });
 
-const compileAll = gulp.parallel('import-libraries', gulp.series('fonts', 'img', 'css'), 'js', 'pug-to-html', 'html'),
+const compileAll = gulp.parallel('import-libraries', gulp.series('fonts', 'img',  'css'), 'assets', 'js', 'pug-to-html', 'html'),
   cleanBuildFolder = async () => await require('del')(['./public']);
 
 gulp.task(
@@ -149,6 +157,7 @@ gulp.task(
       },
     }),
     gulp.watch('src/css/fonts/**/*.*', gulp.series('fonts', 'reload')),
+    gulp.watch('src/assets/**/*.*', gulp.series('assets', 'reload')),
     gulp.watch('src/img/**/*.*', gulp.series('img', 'reload')),
     gulp.watch('src/**/*.scss', gulp.series('css', 'reload')),
     gulp.watch('src/**/*.js', gulp.series('js', 'reload')),

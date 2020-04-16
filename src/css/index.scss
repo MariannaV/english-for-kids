@@ -210,6 +210,8 @@ label[for="toggle-menu"] {
 
   &.inactive {
     filter: opacity(0.5);
+    pointer-events: none;
+    cursor: auto;
   }
 
   & .front {
@@ -238,7 +240,7 @@ label[for="toggle-menu"] {
   & .front, & .back {
     position: absolute;
     top: 0;
-    bottom: 0;
+    left: 0;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -315,4 +317,45 @@ label[for="toggle-menu"] {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 40px, cover;
+}
+
+/*----------STARS----------*/
+.raiting-stars{
+  height: 40px;
+}
+.train .raiting-stars{
+  opacity: 0;
+}
+.play .raiting-stars{
+  display: flex;
+  justify-content: flex-end;
+  opacity: 1;
+}
+ .star{
+   display: inline-block;
+   width: 30px;
+   height: 30px;
+   background-size: cover;
+   &.success{
+     background-image: url("../img/icons/star-win.svg");
+   }
+   &.error{
+     background-image: url("../img/icons/star.svg");
+   }
+ }
+/*---------- RESULTS ----------*/
+.results .toggle-button-container{
+  display: none;
+}
+
+.result-block{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & > p{
+    font-size: 20px;
+    color: red;
+  }
 }

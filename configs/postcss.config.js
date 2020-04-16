@@ -30,7 +30,7 @@ module.exports = {
     }),
     require('postcss-scale')(),
     require('postcss-assets')({ loadPaths: ['img/'] }),
-    require('postcss-sprites')({ spritePath: './public/img' }),
+    // require('postcss-sprites')({ spritePath: './public/img' }),
     require('css-mqpacker')({ sort: true }),
   ],
 }
