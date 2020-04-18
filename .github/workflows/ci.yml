@@ -11,20 +11,17 @@ jobs:
         run: yarn
 
       - name: Formatting
-        run: yarn format
-
-      - name: CSS
-        id: css
+        id: format
         continue-on-error: true
-        run: yarn lint:css && echo ::set-output name=status::success
+        run: yarn format:check && echo ::set-output name=status::success
 
-      - name: JS
-        id: js
+      - name: Lintings
+        id: lint
         continue-on-error: true
-        run: yarn lint:js && echo ::set-output name=status::success
+        run: yarn lint:check && echo ::set-output name=status::success
 
       - name: Check on failures
-        if: steps.css.outputs.status != 'success' || steps.js.outputs.status != 'success'
+        if: steps.lint.outputs.status != 'success' || steps.format.outputs.status != 'success'
         run: echo ${{ toJson(steps) }} && exit 1
 
   deploy:

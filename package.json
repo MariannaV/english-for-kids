@@ -16,7 +16,7 @@
     "format:fix": "prettier --write .",
     "format:check": "prettier --check .",
     "lint:fix": "eslint --fix ./src && stylelint --fix './src/**/*.{css,scss}'",
-    "lint:check": "eslint --fix ./src && stylelint --fix './src/**/*.{css,scss}'",
+    "lint:check": "eslint ./src && stylelint './src/**/*.{css,scss}'",
     "build": "gulp build",
     "server": "yarn serve public",
     "upgrade-packages": "ncu -ui"
