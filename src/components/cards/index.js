@@ -4,7 +4,7 @@ export const setData = new Map([
     {
       title: 'Action (set A)',
       cards: [
-        //[ 'cry', { word: 'cry', image: '' }]
+        // [ 'cry', { word: 'cry', image: '' }]
         {
           word: 'cry',
           translation: 'плакать',
@@ -449,21 +449,21 @@ export const setData = new Map([
       ],
     },
   ],
-])
+]);
 
 export function cardsCreate() {
-  const cardsContainer = document.createElement('div')
-  cardsContainer.classList.add('categories-container')
-  const { setId } = history.state
+  const cardsContainer = document.createElement('div');
+  cardsContainer.classList.add('categories-container');
+  const { setId } = history.state;
   setData.get(setId).cards.forEach(function (cardData) {
-    cardsContainer.appendChild(cardCreate(cardData))
-  })
-  return cardsContainer
+    cardsContainer.appendChild(cardCreate(cardData));
+  });
+  return cardsContainer;
 }
 
 export function cardCreate(data) {
-  const card = document.createElement('div')
-  card.classList.add('set-card')
+  const card = document.createElement('div');
+  card.classList.add('set-card');
   card.insertAdjacentHTML(
     'beforeend',
     `
@@ -477,6 +477,6 @@ export function cardCreate(data) {
                    <p>${data.translation}</p>
                </div>
          `
-  )
-  return card
+  );
+  return card;
 }

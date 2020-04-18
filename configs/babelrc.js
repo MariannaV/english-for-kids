@@ -1,21 +1,24 @@
 const path = require('path'),
   root = path.resolve(__dirname, '../'),
   isDev = process.env.NODE_ENV === 'development',
-  isProd = process.env.NODE_ENV === 'production'
+  isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
   presets: [
     [
       '@babel/preset-env',
       {
-        targets: { browsers: require(`${root}/package.json`).browserslist },
-        /*modules: false,
+        targets: {
+          browsers: require(`${root}/package.json`).browserslist,
+          esmodules: true,
+        },
+        modules: false,
         loose: true,
         spec: true,
         useBuiltIns: 'usage',
         corejs: 3,
         forceAllTransforms: true,
-        debug: false,*/
+        debug: false,
       },
     ],
   ],
@@ -42,4 +45,4 @@ module.exports = {
     // '@babel/plugin-proposal-throw-expressions',
     /* for generators: '@babel/plugin-proposal-function-sent', */
   ].filter(Boolean),
-}
+};

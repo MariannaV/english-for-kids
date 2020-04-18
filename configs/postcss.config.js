@@ -1,5 +1,5 @@
 const path = require('path'),
-  root = path.resolve(__dirname, '../')
+  root = path.resolve(__dirname, '../');
 
 module.exports = {
   plugins: [
@@ -33,4 +33,4 @@ module.exports = {
     // require('postcss-sprites')({ spritePath: './public/img' }),
     require('css-mqpacker')({ sort: true }),
   ],
-}
+};

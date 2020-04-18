@@ -1,55 +1,30 @@
 const path = require('path'),
-  root = path.resolve(__dirname, '../..')
+  root = path.resolve(__dirname, '../..');
 
 module.exports = {
   env: {
     browser: true,
+    es2020: true,
   },
+  parser: 'babel-eslint',
   parserOptions: {
-    ecmaVersion: 2019,
+    ecmaVersion: 2020,
+    sourceType: 'module',
   },
-  plugins: [
-    'import',
-    // 'promise',
-    /*'security',*/
-    // 'json',
-    // 'optimize-regex',
-    // 'compat',
-    // 'deprecate',
-    // 'sonarjs',
-    // 'unicorn',
-    'prettier',
-  ],
-  extends: [
-    // 'eslint:recommended',
-    // 'airbnb',
-    // 'esnext',
-    'plugin:import/errors',
-    'plugin:import/warnings',
-    // 'plugin:promise/recommended',
-    // 'plugin:security/recommended',
-    // 'plugin:you-dont-need-lodash-underscore/compatible',
-    // 'plugin:compat/recommended',
-    // 'plugin:sonarjs/recommended',
-    // 'plugin:unicorn/recommended',
-    // 'standard',
-    // 'plugin:prettier/recommended',
-    'prettier',
-  ],
+  plugins: ['import', 'prettier'],
+  extends: ['eslint:recommended', 'airbnb-base', 'plugin:import/errors', 'plugin:import/warnings', 'prettier'],
   rules: {
-    'one-var': 0,
-    'spaced-comment': 0,
-    'no-param-reassign': 1,
-    'no-use-before-define': 0,
-    'no-unused-vars': 1,
-    'no-shadow': 1,
-    'prefer-template': 0,
-    'prefer-rest-params': 1,
-    'global-require': 0,
-
+    'no-use-before-define': 1,
+    'no-restricted-globals': 0,
+    'no-plusplus': 0,
+    radix: ['error', 'as-needed'],
     'import/no-extraneous-dependencies': 0, //because of Yarn Workspaces
     'import/prefer-default-export': 0,
-    'no-unused-expressions': 0,
+
+    //for Gulp
+    'import/no-unresolved': 0,
+    'import/extensions': 0,
+    'import/no-absolute-path': 0,
   },
   settings: {
     'import/resolver': {
@@ -59,4 +34,4 @@ module.exports = {
       },
     },
   },
-}
+};

@@ -55,28 +55,28 @@ const mainPageMap = new Map([
       ],
     },
   ],
-])
+]);
 
 // main page
-function createMainPage() {
-  const mainPageContainer = document.createElement('div')
-  mainPageContainer.classList.add('categories-container', 'main-container')
-  const { setId } = history.state
+export function createMainPage() {
+  const mainPageContainer = document.createElement('div');
+  mainPageContainer.classList.add('categories-container', 'main-container');
+  // const { setId } = history.state;
   mainPageMap.get('main-page').cards.forEach(function (cardData) {
-    mainPageContainer.appendChild(mainPageCardCreate(cardData))
-  })
-  return mainPageContainer
+    mainPageContainer.appendChild(mainPageCardCreate(cardData));
+  });
+  return mainPageContainer;
 }
 
 function mainPageCardCreate(data) {
-  const card = document.createElement('a')
-  card.classList.add('category-card')
+  const card = document.createElement('a');
+  card.classList.add('category-card');
   card.insertAdjacentHTML(
     'beforeend',
     `
                            <img src=${data.src}>
                            <p>${data.text}</p>
                          `
-  )
-  return card
+  );
+  return card;
 }

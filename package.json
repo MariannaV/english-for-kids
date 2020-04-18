@@ -1,7 +1,6 @@
 {
-  "name": "gulp-project",
+  "name": "english-for-kids",
   "version": "1.0.0",
-  "description": "Fast and effective environment for web development",
   "private": true,
   "workspaces": [
     "./src/**",
@@ -10,21 +9,21 @@
   "browserslist": [
     ">=1%",
     "not ie <= 11",
-    "not dead",
-    "node 12"
+    "not dead"
   ],
   "scripts": {
     "develop": "gulp",
     "format:fix": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint:js": "eslint --fix './src/**/*.js'",
-    "lint:css": "stylelint './src/**/*.{css,scss}'",
+    "lint:fix": "eslint --fix ./src && stylelint --fix './src/**/*.{css,scss}'",
+    "lint:check": "eslint --fix ./src && stylelint --fix './src/**/*.{css,scss}'",
     "build": "gulp build",
+    "server": "yarn serve public",
     "upgrade-packages": "ncu -ui"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn format:check && yarn lint:js && yarn lint:css",
+      "pre-commit": "yarn format:check && yarn lint:check",
       "post-commit": "git update-index --again"
     }
   },
@@ -36,16 +35,6 @@
   },
   "babel": {
     "extends": "./configs/babelrc.js"
-  },
-  "dependencies": {
-    "jquery": "3.4.1",
-    "jquery-ui-slider": "1.12.1",
-    "echo-js": "1.7.3",
-    "lightgallery": "1.6.12",
-    "lightslider": "1.1.6",
-    "owl.carousel": "2.3.4",
-    "remodal": "1.1.1",
-    "flatpickr": "4.6.3"
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
@@ -86,7 +75,8 @@
     "postcss-css-reset": "1.0.2",
     "postcss-scss": "2.0.0",
     "postcss-sprites": "4.2.1",
-    "prettier-stylelint": "0.4.2"
+    "prettier-stylelint": "0.4.2",
+    "serve": "11.3.0"
   },
   "optionalDependencies": {
     "husky": "4.2.5",
