@@ -1,6 +1,5 @@
 @import 'helpers/postcss-reset/mobile.css';
 
-
 /*----------BASIC----------*/
 .wrapper-container {
   /*  max-width: 1000px;*/
@@ -14,7 +13,7 @@ header {
   justify-content: space-between;
 }
 
-label[for="toggle-menu"] {
+label[for='toggle-menu'] {
   position: relative;
   z-index: 3;
   cursor: pointer;
@@ -24,10 +23,9 @@ label[for="toggle-menu"] {
   display: none;
 
   &:checked {
-
-    & + label[for="toggle-menu"] .toggle-menu-label {
+    & + label[for='toggle-menu'] .toggle-menu-label {
       > line {
-        transition: transform .3s, opacity .3s;
+        transition: transform 0.3s, opacity 0.3s;
 
         &:first-child {
           transform: rotate(45deg) translate(2px, -2px);
@@ -48,10 +46,8 @@ label[for="toggle-menu"] {
     & ~ .header-navigation {
       transform: translate(-100%);
     }
-
   }
 }
-
 
 .toggle-menu-label {
   & > line {
@@ -80,7 +76,7 @@ label[for="toggle-menu"] {
   padding: 125px 50px 50px;
   color: white;
   background-color: orange;
-  transition: transform .5s cubic-bezier(.77, .2, .05, 1);
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
   z-index: 2;
 
   & > a {
@@ -122,10 +118,10 @@ label[for="toggle-menu"] {
     content: attr(data-off);
   }
 
-  &::before, &::after {
+  &::before,
+  &::after {
     text-transform: uppercase;
   }
-
 }
 
 #toggle-button {
@@ -154,7 +150,7 @@ label[for="toggle-menu"] {
   height: 20px;
   background-color: #1ccacd;
   border-radius: 3px;
-  transition: left .3s, right .3s;
+  transition: left 0.3s, right 0.3s;
   pointer-events: none;
 }
 
@@ -182,12 +178,12 @@ label[for="toggle-menu"] {
   width: 300px;
   height: 280px;
   border-radius: 5px;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   cursor: pointer;
   transition: box-shadow 0.3s;
 
   &:hover {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, .4);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
   }
 
   & > img {
@@ -200,12 +196,11 @@ label[for="toggle-menu"] {
   }
 }
 
-
 /*----------CONTENT PAGES----------*/
 .play .set-card {
   //border: 1px solid #ccc;
   border-radius: 5px;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .4);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
   cursor: pointer;
 
   &.inactive {
@@ -220,7 +215,8 @@ label[for="toggle-menu"] {
       object-fit: cover;
     }
 
-    & > p, div {
+    & > p,
+    div {
       display: none;
     }
   }
@@ -232,12 +228,12 @@ label[for="toggle-menu"] {
   height: 250px;
   perspective: 1000px;
 
-
   & .back {
     transform: rotateY(180deg);
   }
 
-  & .front, & .back {
+  & .front,
+  & .back {
     position: absolute;
     top: 0;
     left: 0;
@@ -249,16 +245,15 @@ label[for="toggle-menu"] {
     background-repeat: no-repeat;
     transition: 1s;
     backface-visibility: hidden;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .4);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
     &:hover {
-      box-shadow: 0 10px 20px rgba(0, 0, 0, .4);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
     }
 
     & > p {
       margin: 0 auto;
     }
   }
-
 
   &.rotate .front {
     transform: rotateY(180deg);
@@ -272,18 +267,16 @@ label[for="toggle-menu"] {
     max-width: 100%;
   }
 
-
   .rotate-block {
     position: absolute;
     bottom: 10px;
     right: 10px;
     width: 25px;
     height: 25px;
-    background-image: url("../img/icons/rotate-icon.svg");
+    background-image: url('../img/icons/rotate-icon.svg');
     background-size: cover;
     cursor: pointer;
   }
-
 }
 
 .button {
@@ -297,7 +290,6 @@ label[for="toggle-menu"] {
 
 .play .game-button {
   display: flex;
-
 }
 
 .game-button {
@@ -313,48 +305,48 @@ label[for="toggle-menu"] {
   height: 65px;
   font-size: 0;
   border-radius: 50%;
-  background-image: url("../img/icons/repeat.svg"), linear-gradient(40deg, #ffd86f, #fc6262);
+  background-image: url('../img/icons/repeat.svg'), linear-gradient(40deg, #ffd86f, #fc6262);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 40px, cover;
 }
 
 /*----------STARS----------*/
-.raiting-stars{
+.raiting-stars {
   height: 40px;
 }
-.train .raiting-stars{
+.train .raiting-stars {
   opacity: 0;
 }
-.play .raiting-stars{
+.play .raiting-stars {
   display: flex;
   justify-content: flex-end;
   opacity: 1;
 }
- .star{
-   display: inline-block;
-   width: 30px;
-   height: 30px;
-   background-size: cover;
-   &.success{
-     background-image: url("../img/icons/star-win.svg");
-   }
-   &.error{
-     background-image: url("../img/icons/star.svg");
-   }
- }
+.star {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-size: cover;
+  &.success {
+    background-image: url('../img/icons/star-win.svg');
+  }
+  &.error {
+    background-image: url('../img/icons/star.svg');
+  }
+}
 /*---------- RESULTS ----------*/
-.results .toggle-button-container{
+.results .toggle-button-container {
   display: none;
 }
 
-.result-block{
+.result-block {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  & > p{
+  & > p {
     font-size: 20px;
     color: red;
   }
