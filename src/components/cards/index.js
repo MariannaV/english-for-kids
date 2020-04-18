@@ -4,7 +4,6 @@ export const setData = new Map([
     {
       title: 'Action (set A)',
       cards: [
-        // [ 'cry', { word: 'cry', image: '' }]
         {
           word: 'cry',
           translation: 'плакать',
@@ -451,6 +450,22 @@ export const setData = new Map([
   ],
 ]);
 
+export const wordSetCards = {
+  createCard: (data) => {
+    const card = document.createElement('a');
+    card.classList.add('category-card');
+    card.dataset.setId = data.setId;
+    card.insertAdjacentHTML(
+      'beforeend',
+      `
+          <img src=${data.src}>
+          <p>${data.text}</p>`
+    );
+    return card;
+  },
+};
+
+//TODO: rename to wordCards
 export function cardsCreate() {
   const cardsContainer = document.createElement('div');
   cardsContainer.classList.add('categories-container');

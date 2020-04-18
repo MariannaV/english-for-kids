@@ -1,16 +1,16 @@
 import { setData } from '../cards/index.js';
+import { navigateToSet, pages } from '../../pages/common.js';
 
 export function gameHandlers({ orderList }) {
   let currentIndex = 0;
   const gameErrors = [];
-  // let  = new Map()
 
   const mainContainer = document.getElementById('contentContainer');
   const errorSign = new Audio('assets/audio/error.mp3');
   const failureSign = new Audio('assets/audio/failure.mp3');
   const successSign = new Audio('assets/audio/success.mp3');
   const correctSign = new Audio('assets/audio/correct.mp3');
-  const gameStatistics = new Map();
+  // const gameStatistics = new Map();
   console.log(orderList);
 
   return {
@@ -21,11 +21,9 @@ export function gameHandlers({ orderList }) {
       return new Audio(`/assets/${setData.get(history.state.setId).cards[this.currentId].audioSrc}`);
     },
     next() {
-      console.log('OK', currentIndex, this.currentId);
       currentIndex++;
       if (currentIndex !== orderList.size) setTimeout(() => this.audioWord.play(), 1000);
       else {
-        console.log('RESULTS');
         if (gameErrors.length === 0) {
           mainContainer.innerHTML =
             '<div class="result-block success"><p>Win!</p><img src="img/content/success.jpg"></div>';
@@ -35,19 +33,25 @@ export function gameHandlers({ orderList }) {
           failureSign.play();
         }
         document.body.classList.add('results');
+
+        setTimeout(() => {
+          document.querySelector('header .toggle-button-block').click();
+          document.body.classList.remove('results');
+          navigateToSet(undefined, {
+            page: pages.home,
+            setId: null,
+            setName: null,
+          });
+        }, 3000);
       }
     },
     check(el, index) {
-      console.log(currentIndex, this.currentId);
       const star = starCreate();
       const isWrongChoice = index !== this.currentId;
       if (isWrongChoice) {
         star.classList.add('error');
-        console.log('STAR');
-        console.log('ERROR', currentIndex, this.currentId, orderList);
         gameErrors.push('error');
         errorSign.play();
-        console.log('errors:', `${setData.get(history.state.setId).cards[this.currentId].word}`);
       } else {
         el.classList.add('inactive');
         star.classList.add('success');
@@ -58,8 +62,8 @@ export function gameHandlers({ orderList }) {
 
       if (!isWrongChoice) this.next();
 
-      gameStatistics.set([`${setData.get(history.state.setId).cards[this.currentId].word}`], '0');
-      console.log(gameStatistics);
+      // gameStatistics.set([`${setData.get(history.state.setId).cards[this.currentId].word}`], '0');
+      // console.log(gameStatistics);
     },
   };
 }

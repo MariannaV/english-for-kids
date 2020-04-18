@@ -1,71 +1,14 @@
 include ../components/head/head
 include ../components/header/header.pug
 
-mixin card(data)
-    - const { setId, text: setName } = data
-    a.category-card(onclick=`navigateToSet(event, ${JSON.stringify({setId, setName})})`)
-        img(src=data.src)
-        p #{setName}
-
-
 doctype html
 html(lang="ru")
-    +head({"title": "Главная", "description": "Главная страница"})
+    +head({ "title": "Главная", "description": "Главная страница" })
         link(rel="stylesheet" href="styles/index.css")
     body.page-home.train
         .wrapper-container
             +header()
             main(id='contentContainer')
-                .categories-container.main-container
-                    +card({
-                        src: "img/content/dance.jpg",
-                        text: "Action (set A)",
-                        setId: 'action-0',
-                        page: 'set'
-                    })
-                    +card({
-                        src: "img/content/swim.jpg",
-                        text: "Action (set B)",
-                        setId: 'action-1',
-                        page: 'set'
-                    })
-                    +card({
-                        src: "img/content/drop.jpg",
-                        text: "Action (set C)",
-                        setId: 'action-2',
-                        page: 'set'
-                    })
-                    +card({
-                        src: "img/content/friendly.jpg",
-                        text: "Adjective",
-                        setId: 'adjective-0',
-                        page: 'set'
-                    })
-                    +card({
-                        src: "img/content/cat.jpg",
-                        text: "Animal (set A)",
-                        setId: 'animal-0',
-                        page: 'set'
-                    })
-                    +card({
-                        src: "img/content/bird.jpg",
-                        text: "Animal (set B)",
-                        setId: 'animal-1',
-                        page: 'set'
-                    })
-                    +card({
-                        src: "img/content/blouse.jpg",
-                        text: "Clothes",
-                        setId: 'clothes-0',
-                        page: 'set'
-                    })
-                    +card({
-                        src: "img/content/smile.jpg",
-                        text: "Emotion",
-                        setId: 'emotion-0',
-                        page: 'set'
-                    })
-
 
     script(type='module' src='/js/pages/common.js' defer)
 

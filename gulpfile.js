@@ -9,7 +9,7 @@ gulp.task('pug-to-html', () =>
     .src('src/html/*.pug' /*, { since: gulp.lastRun("pug-to-html") }*/)
     .pipe(plumber({ errorHandler: notify.onError('Pug: <%= error.message %>') }))
     .pipe(newer('public'))
-    .pipe(require('gulp-pug')({ pretty: '\t' }))
+    .pipe(require('gulp-pug')({ pretty: '\t', locals: { require } }))
     .pipe(gulp.dest('public'))
 );
 
