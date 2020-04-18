@@ -20,26 +20,11 @@ export function gameHandlers({ orderList }) {
     get audioWord() {
       return new Audio(`/assets/${setData.get(history.state.setId).cards[this.currentId].audioSrc}`);
     },
-
     next() {
-      // Проверить не пора ли завершить игру
-      // currentIndex++;
-      // if (this.currentId === undefined) {
-      //     console.log('RESULTS')
-      // }
-      //
-      // if (currentIndex < orderList.size) {
-      //     currentIndex++;
-      // } else {
-      //     console.log('RESULTS')
-      // }
-      // if (currentIndex < orderList.size) {
       console.log('OK', currentIndex, this.currentId);
-
       currentIndex++;
-      if (currentIndex < orderList.size) setTimeout(() => this.audioWord.play(), 1000);
-
-      if (currentIndex === orderList.size) {
+      if (currentIndex !== orderList.size) setTimeout(() => this.audioWord.play(), 1000);
+      else {
         console.log('RESULTS');
         if (gameErrors.length === 0) {
           mainContainer.innerHTML =
@@ -51,7 +36,6 @@ export function gameHandlers({ orderList }) {
         }
         document.body.classList.add('results');
       }
-      // }
     },
     check(el, index) {
       console.log(currentIndex, this.currentId);
@@ -73,12 +57,7 @@ export function gameHandlers({ orderList }) {
       document.querySelector('.raiting-stars').append(star);
 
       if (!isWrongChoice) this.next();
-      // if (index === this.currentId) {
-      //     console.log("OK", index, this.currentId, this);
-      //     this.next();
-      // } else {
-      //     console.log('ERROR', index, this.currentId)
-      // }
+
       gameStatistics.set([`${setData.get(history.state.setId).cards[this.currentId].word}`], '0');
       console.log(gameStatistics);
     },
@@ -88,7 +67,6 @@ export function gameHandlers({ orderList }) {
 export function starsCreate() {
   const starsContainer = document.createElement('div');
   starsContainer.classList.add('raiting-stars');
-  // starsContainer.appendChild(starCreate());
   return starsContainer;
 }
 

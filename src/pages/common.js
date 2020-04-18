@@ -1,15 +1,10 @@
 import { setData, cardsCreate } from '../components/cards/index.js';
 import { gameHandlers, startGameButtonCreate, starsCreate } from '../components/game/index.js';
-import { createMainPage } from './home';
+// import { createMainPage } from './home.js';
 
-// export from module to window
-[navigateToSet, toggleThemes].forEach((func) => {
-  window[func.name] = func;
-});
-
-window.onpopstate = () => {
+/*window.onpopstate = () => {
   render();
-};
+};*/
 
 function render() {
   const { setId } = history?.state;
@@ -22,7 +17,7 @@ function render() {
     fragment.appendChild(startGameButtonCreate());
   } else if (setId === 'main-page') {
     console.log('createMainPage');
-    fragment.appendChild(createMainPage());
+    // fragment.appendChild(createMainPage());
     // return contentContainer.insertAdjacentElement('beforebegin', createMainPage())
   }
 
@@ -43,22 +38,16 @@ function render() {
       const handlers = gameHandlers({ orderList: randomNumbersArray() });
       // смотреть на класс/переменную игра идёт на body
       return () => {
-        if (startGameButton.classList.contains('game-button')) {
-          // handlers = gameHandlers({orderList: randomNumbersArray()})
+        if (startGameButton.classList.contains('game-button'))
           document.querySelectorAll('.set-card').forEach((el, index) =>
             el.addEventListener('click', () => {
               handlers.check(el, index);
             })
           );
-          handlers.audioWord.play();
-        }
+
         startGameButton.classList.add('repeat-button');
         startGameButton.classList.remove('game-button');
-
-        if (startGameButton.classList.contains('repeat-button')) {
-          console.log('REPEAT', handlers);
-          handlers.audioWord.play();
-        }
+        handlers.audioWord.play();
       };
     })()
   );
@@ -99,7 +88,7 @@ function toggleThemes(el) {
     body.classList.add(el.dataset.on);
   }
 }
-// end toggle theme
+
 const toggleMenuInput = document.getElementById('toggle-menu');
 const menuLinks = document.querySelectorAll('.header-link');
 // (function hideMenu(){
@@ -108,3 +97,8 @@ menuLinks.forEach((el) =>
     toggleMenuInput.checked = false;
   })
 );
+
+// export from module to window
+[navigateToSet, toggleThemes].forEach((func) => {
+  window[func.name] = func;
+});
