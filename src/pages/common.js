@@ -177,7 +177,19 @@ function toggleThemes(el) {
   }
 }
 
+[navigateToSet, toggleThemes].forEach((func) => {
+  window[func.name] = func;
+});
+
+/* HEADER NAVIGATION: START */
 const toggleMenuInput = document.getElementById('toggle-menu'),
+  onOutsideHeaderMenuClick = (event) => {
+    const ignoredParents = ['label[for="toggle-menu"]', '.header-navigation'];
+    if (ignoredParents.every((selector) => !event.target.closest(selector))) {
+      toggleMenuInput.checked = false;
+      window.removeEventListener('click', onOutsideHeaderMenuClick);
+    }
+  },
   menuLinks = document.querySelectorAll('.header-link');
 
 menuLinks.forEach((el) =>
@@ -186,7 +198,9 @@ menuLinks.forEach((el) =>
   })
 );
 
-// export from module to window
-[navigateToSet, toggleThemes].forEach((func) => {
-  window[func.name] = func;
+toggleMenuInput.addEventListener('click', (inputEvent) => {
+  inputEvent.stopPropagation();
+  if (toggleMenuInput.checked) window.addEventListener('click', onOutsideHeaderMenuClick);
 });
+
+/* HEADER NAVIGATION: END */

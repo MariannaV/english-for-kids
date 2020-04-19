@@ -139,4 +139,4 @@ gulp.task(
   })
 );
 
-gulp.task('build', gulp.series(cleanBuildFolder, compileAll, gulp.parallel('js-optim', 'сss-optim')));
+gulp.task('build', gulp.series(cleanBuildFolder, compileAll, gulp.parallel(/*'js-optim',*/ 'сss-optim')));
