@@ -168,7 +168,7 @@ function render() {
 }
 
 export function navigateToSet(event, { setId, setName, page }) {
-  event.preventDefault();
+  event?.preventDefault?.();
   history.pushState({ setId, page }, setName);
   render();
 }
