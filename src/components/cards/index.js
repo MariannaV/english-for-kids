@@ -409,42 +409,42 @@ export const setData = new Map([
           image: 'img/content/angry.jpg',
           audioSrc: 'audio/angry.mp3',
         },
-        // {
-        //     word: 'happy',
-        //     translation: 'счастливый',
-        //     image: 'img/content/happy.jpg',
-        //     audioSrc: 'audio/happy.mp3'
-        // },
-        // {
-        //     word: 'tired',
-        //     translation: 'уставший',
-        //     image: 'img/content/tired.jpg',
-        //     audioSrc: 'audio/tired.mp3'
-        // },
-        // {
-        //     word: 'surprised',
-        //     translation: 'удивлённый',
-        //     image: 'img/content/surprised.jpg',
-        //     audioSrc: 'audio/surprised.mp3'
-        // },
-        // {
-        //     word: 'scared',
-        //     translation: 'испуганный',
-        //     image: 'img/content/scared.jpg',
-        //     audioSrc: 'audio/scared.mp3'
-        // },
-        // {
-        //     word: 'smile',
-        //     translation: 'улыбка',
-        //     image: 'img/content/smile.jpg',
-        //     audioSrc: 'audio/smile.mp3'
-        // },
-        // {
-        //     word: 'laugh',
-        //     translation: 'смех',
-        //     image: 'img/content/laugh.jpg',
-        //     audioSrc: 'audio/laugh.mp3'
-        // }
+        {
+          word: 'happy',
+          translation: 'счастливый',
+          image: 'img/content/happy.jpg',
+          audioSrc: 'audio/happy.mp3',
+        },
+        {
+          word: 'tired',
+          translation: 'уставший',
+          image: 'img/content/tired.jpg',
+          audioSrc: 'audio/tired.mp3',
+        },
+        {
+          word: 'surprised',
+          translation: 'удивлённый',
+          image: 'img/content/surprised.jpg',
+          audioSrc: 'audio/surprised.mp3',
+        },
+        {
+          word: 'scared',
+          translation: 'испуганный',
+          image: 'img/content/scared.jpg',
+          audioSrc: 'audio/scared.mp3',
+        },
+        {
+          word: 'smile',
+          translation: 'улыбка',
+          image: 'img/content/smile.jpg',
+          audioSrc: 'audio/smile.mp3',
+        },
+        {
+          word: 'laugh',
+          translation: 'смех',
+          image: 'img/content/laugh.jpg',
+          audioSrc: 'audio/laugh.mp3',
+        },
       ],
     },
   ],
@@ -465,7 +465,6 @@ export const wordSetCards = {
   },
 };
 
-//TODO: rename to wordCards
 export function cardsCreate() {
   const cardsContainer = document.createElement('div');
   cardsContainer.classList.add('categories-container');

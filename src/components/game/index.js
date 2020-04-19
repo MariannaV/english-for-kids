@@ -10,8 +10,6 @@ export function gameHandlers({ orderList }) {
   const failureSign = new Audio('assets/audio/failure.mp3');
   const successSign = new Audio('assets/audio/success.mp3');
   const correctSign = new Audio('assets/audio/correct.mp3');
-  // const gameStatistics = new Map();
-  console.log(orderList);
 
   return {
     get currentId() {
@@ -61,9 +59,6 @@ export function gameHandlers({ orderList }) {
       document.querySelector('.raiting-stars').append(star);
 
       if (!isWrongChoice) this.next();
-
-      // gameStatistics.set([`${setData.get(history.state.setId).cards[this.currentId].word}`], '0');
-      // console.log(gameStatistics);
     },
   };
 }
