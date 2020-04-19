@@ -6,6 +6,10 @@ export const pages = {
     home: 'home',
     sets: 'sets',
   },
+  routes = {
+    home: '/home',
+    sets: '/sets/:setId',
+  },
   wordSets = {
     'action-0': {
       src: 'img/content/dance.jpg',
@@ -89,7 +93,8 @@ function render() {
     fragment = document.createDocumentFragment();
 
   let callbackAfterCreating = Function.prototype,
-    pageTitleArgs;
+    pageTitleArgs,
+    activeURL;
 
   switch (page) {
     case pages.sets: {
@@ -98,7 +103,7 @@ function render() {
       fragment.append(starsCreate());
       fragment.appendChild(cardsCreate());
       fragment.appendChild(startGameButtonCreate());
-
+      activeURL = createRoute({ page, setId });
       callbackAfterCreating = () => {
         document.querySelectorAll('.set-card .front img').forEach((cardEl) => {
           cardEl.addEventListener(
@@ -146,6 +151,7 @@ function render() {
 
     case pages.home: {
       fragment.appendChild(pageHome.onCreate());
+      activeURL = createRoute({ page });
       callbackAfterCreating = pageHome.afterCreating;
       break;
     }
@@ -157,10 +163,12 @@ function render() {
   contentContainer.innerHTML = '';
   contentContainer.append(fragment);
   document.title = pageSettings.get(page).title(pageTitleArgs);
+  toggleActiveHeaderLink({ url: activeURL });
   callbackAfterCreating();
 }
 
 export function navigateToSet(event, { setId, setName, page }) {
+  event.preventDefault();
   history.pushState({ setId, page }, setName);
   render();
 }
@@ -179,6 +187,7 @@ function toggleThemes(el) {
     el.classList.add('orange');
     if (body.classList.contains(el.dataset.on)) {
       body.classList.remove(el.dataset.on);
+      render();
     }
     body.classList.add(el.dataset.off);
   } else if (el.classList.contains('orange')) {
@@ -211,6 +220,31 @@ menuLinks.forEach((el) =>
     toggleMenuInput.checked = false;
   })
 );
+
+function toggleActiveHeaderLink({ url }) {
+  const activeClass = 'active',
+    prevLink = document.querySelector(`.header-navigation .header-link.${activeClass}`),
+    newLink = document.querySelector(`.header-navigation .header-link[href="${url}"]`);
+  if (prevLink) prevLink.classList.remove(activeClass);
+  if (newLink) newLink.classList.add(activeClass);
+}
+
+function createRoute({ page, ...params }) {
+  const url = routes[page];
+  if (!Object.keys(params).length) return url;
+  return url.replace(
+    new RegExp(
+      Object.keys(params)
+        .map((param) => `:${param}`)
+        .join('|'),
+      'g'
+    ),
+    (match) => {
+      const paramKey = match.substring(1);
+      return params[paramKey];
+    }
+  );
+}
 
 toggleMenuInput.addEventListener('click', (inputEvent) => {
   inputEvent.stopPropagation();

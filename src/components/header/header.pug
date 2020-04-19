@@ -1,6 +1,8 @@
 mixin header-link(data)
     - const { setId, text: setName, page } = data
-    a.header-link(onclick=`navigateToSet(event, ${JSON.stringify({ setId, setName, page })})`) #{setName}
+    a.header-link(
+        href=`${createRoute({page, setId})}`
+        onclick=`navigateToSet(event, ${JSON.stringify({ setId, setName, page })})`) #{setName}
 
 mixin header()
     header

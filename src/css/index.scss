@@ -103,6 +103,7 @@ label[for='toggle-menu'] {
   & > a {
     font-size: 24px;
     cursor: pointer;
+    color: inherit;
   }
 
   & > a + a {
