@@ -23,6 +23,10 @@ label[for='toggle-menu'] {
   display: none;
 
   &:checked {
+    & + label[for='toggle-menu'] {
+      position: fixed;
+    }
+
     & + label[for='toggle-menu'] .toggle-menu-label {
       > line {
         transition: transform 0.3s, opacity 0.3s;
@@ -65,14 +69,14 @@ label[for='toggle-menu'] {
 }
 
 .header-navigation {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   display: flex;
   flex-direction: column;
   width: 100%;
   max-width: 380px;
-  min-height: 100vh;
+  height: 100vh;
   padding: 125px 50px 50px;
   color: white;
   background-color: orange;
