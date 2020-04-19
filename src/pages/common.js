@@ -100,18 +100,23 @@ function render() {
       fragment.appendChild(startGameButtonCreate());
 
       callbackAfterCreating = () => {
-        document.querySelectorAll('.set-card').forEach((cardEl) => {
+        document.querySelectorAll('.set-card .front img').forEach((cardEl) => {
           cardEl.addEventListener(
             'click',
             (() => {
-              const { cardId } = cardEl.dataset,
+              const { cardId } = cardEl.closest('.set-card').dataset,
                 { audioSrc } = setData.get(setId).cards.find(({ word }) => word === cardId),
                 audioWord = new Audio(`/assets/${audioSrc}`);
               return () => document.body.classList.contains('train') && audioWord.play();
             })()
           );
-          cardEl.querySelector('.rotate-block').addEventListener('click', () => cardEl.classList.add('rotate'));
-          cardEl.addEventListener('mouseleave', () => cardEl.classList.remove('rotate'));
+          cardEl
+            .closest('.set-card')
+            .querySelector('.rotate-block')
+            .addEventListener('click', () => cardEl.closest('.set-card').classList.add('rotate'));
+          cardEl
+            .closest('.set-card')
+            .addEventListener('mouseleave', () => cardEl.closest('.set-card').classList.remove('rotate'));
         });
 
         // let gameStorage = window.localStorage()
