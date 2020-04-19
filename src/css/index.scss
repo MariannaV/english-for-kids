@@ -325,12 +325,15 @@ label[for='toggle-menu'] {
 .play .raiting-stars {
   display: flex;
   justify-content: flex-end;
+  flex-direction: row-reverse;
+  overflow-x: hidden;
   opacity: 1;
 }
 .star {
   display: inline-block;
   width: 30px;
   height: 30px;
+  flex-shrink: 0;
   background-size: cover;
   &.success {
     background-image: url('../img/icons/star-win.svg');
