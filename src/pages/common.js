@@ -195,6 +195,7 @@ function toggleThemes(el) {
     el.classList.add('green');
     if (body.classList.contains(el.dataset.off)) {
       body.classList.remove(el.dataset.off);
+      render();
     }
     body.classList.add(el.dataset.on);
   }
