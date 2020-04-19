@@ -1,0 +1,18 @@
+include ../components/head/head
+include ../components/header/header.pug
+
+doctype html
+html(lang="ru")
+    +head({ "title": "Главная", "description": "Главная страница" })
+        link(rel="stylesheet" href="styles/index.css")
+    body.page-home.train
+        .wrapper-container
+            +header()
+            main(id='contentContainer')
+
+    script(type='module' src='/js/pages/common.js' defer)
+
+
+
+
+
