@@ -1,1 +1,3 @@
-[English for kids](https://english-for-kids.netlify.com/)
+[Задание](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/rslang/english-for-kids.md)
+
+[Демо](https://mari-english-for-kids.netlify.app/)
