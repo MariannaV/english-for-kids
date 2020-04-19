@@ -93,20 +93,29 @@ function render() {
 
   switch (page) {
     case pages.sets: {
-      pageTitleArgs = { setId: history?.state.setId };
+      const { setId } = history.state;
+      pageTitleArgs = { setId };
       fragment.append(starsCreate());
       fragment.appendChild(cardsCreate());
       fragment.appendChild(startGameButtonCreate());
 
       callbackAfterCreating = () => {
-        // rotate cards
         document.querySelectorAll('.set-card').forEach((cardEl) => {
+          cardEl.addEventListener(
+            'click',
+            (() => {
+              const { cardId } = cardEl.dataset,
+                { audioSrc } = setData.get(setId).cards.find(({ word }) => word === cardId),
+                audioWord = new Audio(`/assets/${audioSrc}`);
+              return () => document.body.classList.contains('train') && audioWord.play();
+            })()
+          );
           cardEl.querySelector('.rotate-block').addEventListener('click', () => cardEl.classList.add('rotate'));
           cardEl.addEventListener('mouseleave', () => cardEl.classList.remove('rotate'));
         });
-        // start button => repeat button
-        const startGameButton = document.querySelector('.game-button');
+
         // let gameStorage = window.localStorage()
+        const startGameButton = document.querySelector('.game-button');
         startGameButton.addEventListener(
           'click',
           (() => {

@@ -479,6 +479,7 @@ export function cardsCreate() {
 export function cardCreate(data) {
   const card = document.createElement('div');
   card.classList.add('set-card');
+  card.dataset.cardId = data.word;
   card.insertAdjacentHTML(
     'beforeend',
     `
