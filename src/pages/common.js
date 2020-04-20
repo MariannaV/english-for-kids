@@ -3,81 +3,84 @@ import { gameHandlers, startGameButtonCreate, starsCreate } from '../components/
 import { pageHome } from './home.js';
 
 export const pages = {
-    home: 'home',
-    sets: 'sets',
+  home: 'home',
+  sets: 'sets',
+};
+
+export const routes = {
+  home: '/home',
+  sets: '/sets/:setId',
+};
+
+export const wordSets = {
+  'action-0': {
+    src: 'img/content/dance.jpg',
+    text: 'Action (set A)',
+    setId: 'action-0',
   },
-  routes = {
-    home: '/home',
-    sets: '/sets/:setId',
+  'action-1': {
+    src: 'img/content/swim.jpg',
+    text: 'Action (set B)',
+    setId: 'action-1',
   },
-  wordSets = {
-    'action-0': {
-      src: 'img/content/dance.jpg',
-      text: 'Action (set A)',
-      setId: 'action-0',
-    },
-    'action-1': {
-      src: 'img/content/swim.jpg',
-      text: 'Action (set B)',
-      setId: 'action-1',
-    },
-    'action-2': {
-      src: 'img/content/drop.jpg',
-      text: 'Action (set C)',
-      setId: 'action-2',
-    },
-    'adjective-0': {
-      src: 'img/content/friendly.jpg',
-      text: 'Adjective',
-      setId: 'adjective-0',
-    },
-    'animal-0': {
-      src: 'img/content/cat.jpg',
-      text: 'Animal (set A)',
-      setId: 'animal-0',
-    },
-    'animal-1': {
-      src: 'img/content/bird.jpg',
-      text: 'Animal (set B)',
-      setId: 'animal-1',
-    },
-    'clothes-0': {
-      src: 'img/content/blouse.jpg',
-      text: 'Clothes',
-      setId: 'clothes-0',
-    },
-    'emotion-0': {
-      src: 'img/content/smile.jpg',
-      text: 'Emotion',
-      setId: 'emotion-0',
-    },
+  'action-2': {
+    src: 'img/content/drop.jpg',
+    text: 'Action (set C)',
+    setId: 'action-2',
   },
-  pageSettings = new Map([
-    [
-      pages.home,
-      {
-        title: () => 'Главная',
-        page: pages.home,
-        sets: [
-          wordSets['action-0'].setId,
-          wordSets['action-1'].setId,
-          wordSets['action-2'].setId,
-          wordSets['adjective-0'].setId,
-          wordSets['animal-0'].setId,
-          wordSets['animal-1'].setId,
-          wordSets['clothes-0'].setId,
-          wordSets['emotion-0'].setId,
-        ],
-      },
-    ],
-    [
-      pages.sets,
-      {
-        page: pages.sets,
-        title: ({ setId }) => wordSets[setId].text,
-      },
-    ],
-  ]);
+  'adjective-0': {
+    src: 'img/content/friendly.jpg',
+    text: 'Adjective',
+    setId: 'adjective-0',
+  },
+  'animal-0': {
+    src: 'img/content/cat.jpg',
+    text: 'Animal (set A)',
+    setId: 'animal-0',
+  },
+  'animal-1': {
+    src: 'img/content/bird.jpg',
+    text: 'Animal (set B)',
+    setId: 'animal-1',
+  },
+  'clothes-0': {
+    src: 'img/content/blouse.jpg',
+    text: 'Clothes',
+    setId: 'clothes-0',
+  },
+  'emotion-0': {
+    src: 'img/content/smile.jpg',
+    text: 'Emotion',
+    setId: 'emotion-0',
+  },
+};
+
+export const pageSettings = new Map([
+  [
+    pages.home,
+    {
+      title: () => 'Главная',
+      page: pages.home,
+      sets: [
+        wordSets['action-0'].setId,
+        wordSets['action-1'].setId,
+        wordSets['action-2'].setId,
+        wordSets['adjective-0'].setId,
+        wordSets['animal-0'].setId,
+        wordSets['animal-1'].setId,
+        wordSets['clothes-0'].setId,
+        wordSets['emotion-0'].setId,
+      ],
+    },
+  ],
+  [
+    pages.sets,
+    {
+      page: pages.sets,
+      title: ({ setId }) => wordSets[setId].text,
+    },
+  ],
+]);
 
 window.onload = () => {
   render();
@@ -88,13 +91,13 @@ window.onpopstate = () => {
 };
 
 function render() {
-  const { page = pages.home } = history?.state ?? {},
-    { contentContainer } = window,
-    fragment = document.createDocumentFragment();
+  const { page = pages.home } = history?.state ?? {};
+  const { contentContainer } = window;
+  const fragment = document.createDocumentFragment();
 
-  let callbackAfterCreating = Function.prototype,
-    pageTitleArgs,
-    activeURL;
+  let callbackAfterCreating = Function.prototype;
+  let pageTitleArgs;
+  let activeURL;
 
   switch (page) {
     case pages.sets: {
@@ -109,9 +112,9 @@ function render() {
           cardEl.addEventListener(
             'click',
             (() => {
-              const { cardId } = cardEl.closest('.set-card').dataset,
-                { audioSrc } = setData.get(setId).cards.find(({ word }) => word === cardId),
-                audioWord = new Audio(`/assets/${audioSrc}`);
+              const { cardId } = cardEl.closest('.set-card').dataset;
+              const { audioSrc } = setData.get(setId).cards.find(({ word }) => word === cardId);
+              const audioWord = new Audio(`/assets/${audioSrc}`);
               return () => document.body.classList.contains('train') && audioWord.play();
             })()
           );
@@ -206,15 +209,15 @@ function toggleThemes(el) {
 });
 
 /* HEADER NAVIGATION: START */
-const toggleMenuInput = document.getElementById('toggle-menu'),
-  onOutsideHeaderMenuClick = (event) => {
-    const ignoredParents = ['label[for="toggle-menu"]', '.header-navigation'];
-    if (ignoredParents.every((selector) => !event.target.closest(selector))) {
-      toggleMenuInput.checked = false;
-      window.removeEventListener('click', onOutsideHeaderMenuClick);
-    }
-  },
-  menuLinks = document.querySelectorAll('.header-link');
+const toggleMenuInput = document.getElementById('toggle-menu');
+const onOutsideHeaderMenuClick = (event) => {
+  const ignoredParents = ['label[for="toggle-menu"]', '.header-navigation'];
+  if (ignoredParents.every((selector) => !event.target.closest(selector))) {
+    toggleMenuInput.checked = false;
+    window.removeEventListener('click', onOutsideHeaderMenuClick);
+  }
+};
+const menuLinks = document.querySelectorAll('.header-link');
 
 menuLinks.forEach((el) =>
   el.addEventListener('click', () => {
@@ -223,9 +226,9 @@ menuLinks.forEach((el) =>
 );
 
 function toggleActiveHeaderLink({ url }) {
-  const activeClass = 'active',
-    prevLink = document.querySelector(`.header-navigation .header-link.${activeClass}`),
-    newLink = document.querySelector(`.header-navigation .header-link[href="${url}"]`);
+  const activeClass = 'active';
+  const prevLink = document.querySelector(`.header-navigation .header-link.${activeClass}`);
+  const newLink = document.querySelector(`.header-navigation .header-link[href="${url}"]`);
   if (prevLink) prevLink.classList.remove(activeClass);
   if (newLink) newLink.classList.add(activeClass);
 }
