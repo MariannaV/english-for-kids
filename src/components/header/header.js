@@ -1,13 +1,11 @@
-import { routes } from './data.js';
-import { render } from '../pages/common.js';
+//I need to double it because I want to use it in header.pug and get it from gulpfile
 
-export function navigateToSet(event, { setId, setName, page }) {
-  event?.preventDefault?.();
-  history.pushState({ setId, page }, setName);
-  render();
-}
+const routes = {
+  home: '/home',
+  sets: '/sets/:setId',
+};
 
-export function createRoute({ page, ...params }) {
+function createRoute({ page, ...params }) {
   const urlPattern = routes[page];
   if (!Object.keys(params).length) return urlPattern;
   return urlPattern.replace(
@@ -23,3 +21,7 @@ export function createRoute({ page, ...params }) {
     }
   );
 }
+
+module.exports = {
+  createRoute,
+};
