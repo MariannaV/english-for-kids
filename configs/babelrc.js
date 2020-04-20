@@ -1,7 +1,8 @@
-const path = require('path'),
-  root = path.resolve(__dirname, '../'),
-  isDev = process.env.NODE_ENV === 'development',
-  isProd = process.env.NODE_ENV === 'production';
+const path = require('path');
+
+const root = path.resolve(__dirname, '../');
+const isDev = process.env.NODE_ENV === 'development';
+const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
   presets: [
