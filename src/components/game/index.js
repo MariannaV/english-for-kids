@@ -1,5 +1,6 @@
-import { setData } from '../cards/index.js';
-import { navigateToSet, pages } from '../../pages/common.js';
+import { setsData, pages } from '../data.js';
+import { navigateToSet } from '../navigation.js';
+import { render } from '../../pages/common.js';
 
 export function gameHandlers({ orderList }) {
   let currentIndex = 0;
@@ -16,7 +17,7 @@ export function gameHandlers({ orderList }) {
       return [...orderList][currentIndex];
     },
     get audioWord() {
-      return new Audio(`/assets/${setData.get(history.state.setId).cards[this.currentId].audioSrc}`);
+      return new Audio(`/assets/${setsData.get(history.state.setId).cards[this.currentId].audioSrc}`);
     },
     next() {
       currentIndex++;
@@ -80,4 +81,33 @@ export function startGameButtonCreate() {
   button.classList.add('button', 'game-button');
   button.innerText = 'Start game';
   return button;
+}
+
+export function toggleThemes(el) {
+  const { body } = document;
+  //TODO: refactor it
+  if (el.classList.contains('green')) {
+    el.classList.remove('green');
+    el.classList.add('orange');
+    if (body.classList.contains(el.dataset.on)) {
+      body.classList.remove(el.dataset.on);
+      render();
+    }
+    body.classList.add(el.dataset.off);
+  } else if (el.classList.contains('orange')) {
+    el.classList.remove('orange');
+    el.classList.add('green');
+    if (body.classList.contains(el.dataset.off)) {
+      body.classList.remove(el.dataset.off);
+      render();
+    }
+    body.classList.add(el.dataset.on);
+  }
+}
+
+export function randomNumbersArray() {
+  const randomArray = new Set();
+  const currentSet = setsData.get(history.state.setId).cards;
+  while (randomArray.size < currentSet.length) randomArray.add(parseInt(Math.random() * currentSet.length)); // currenSet[...].word
+  return randomArray;
 }

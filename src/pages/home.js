@@ -1,4 +1,5 @@
-import { pageSettings, pages, wordSets, navigateToSet } from './common.js';
+import { pageSettings, pages, wordSets } from '../components/data.js';
+import { navigateToSet } from '../components/navigation.js';
 import { wordSetCards } from '../components/cards/index.js';
 
 export const pageHome = {

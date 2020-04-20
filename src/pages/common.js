@@ -1,86 +1,14 @@
-import { setData, cardsCreate } from '../components/cards/index.js';
-import { gameHandlers, startGameButtonCreate, starsCreate } from '../components/game/index.js';
+import { pages, pageSettings, setsData } from '../components/data.js';
+import { navigateToSet, createRoute } from '../components/navigation.js';
+import { cardsCreate } from '../components/cards/index.js';
+import {
+  gameHandlers,
+  startGameButtonCreate,
+  starsCreate,
+  toggleThemes,
+  randomNumbersArray,
+} from '../components/game/index.js';
 import { pageHome } from './home.js';
-
-export const pages = {
-  home: 'home',
-  sets: 'sets',
-};
-
-export const routes = {
-  home: '/home',
-  sets: '/sets/:setId',
-};
-
-export const wordSets = {
-  'action-0': {
-    src: 'img/content/dance.jpg',
-    text: 'Action (set A)',
-    setId: 'action-0',
-  },
-  'action-1': {
-    src: 'img/content/swim.jpg',
-    text: 'Action (set B)',
-    setId: 'action-1',
-  },
-  'action-2': {
-    src: 'img/content/drop.jpg',
-    text: 'Action (set C)',
-    setId: 'action-2',
-  },
-  'adjective-0': {
-    src: 'img/content/friendly.jpg',
-    text: 'Adjective',
-    setId: 'adjective-0',
-  },
-  'animal-0': {
-    src: 'img/content/cat.jpg',
-    text: 'Animal (set A)',
-    setId: 'animal-0',
-  },
-  'animal-1': {
-    src: 'img/content/bird.jpg',
-    text: 'Animal (set B)',
-    setId: 'animal-1',
-  },
-  'clothes-0': {
-    src: 'img/content/blouse.jpg',
-    text: 'Clothes',
-    setId: 'clothes-0',
-  },
-  'emotion-0': {
-    src: 'img/content/smile.jpg',
-    text: 'Emotion',
-    setId: 'emotion-0',
-  },
-};
-
-export const pageSettings = new Map([
-  [
-    pages.home,
-    {
-      title: () => 'Главная',
-      page: pages.home,
-      sets: [
-        wordSets['action-0'].setId,
-        wordSets['action-1'].setId,
-        wordSets['action-2'].setId,
-        wordSets['adjective-0'].setId,
-        wordSets['animal-0'].setId,
-        wordSets['animal-1'].setId,
-        wordSets['clothes-0'].setId,
-        wordSets['emotion-0'].setId,
-      ],
-    },
-  ],
-  [
-    pages.sets,
-    {
-      page: pages.sets,
-      title: ({ setId }) => wordSets[setId].text,
-    },
-  ],
-]);
 
 window.onload = () => {
   render();
@@ -90,7 +18,7 @@ window.onpopstate = () => {
   render();
 };
 
-function render() {
+export function render() {
   const { page = pages.home } = history?.state ?? {};
   const { contentContainer } = window;
   const fragment = document.createDocumentFragment();
@@ -101,6 +29,7 @@ function render() {
 
   switch (page) {
     case pages.sets: {
+      //TODO: refactor as case 'home'
       const { setId } = history.state;
       pageTitleArgs = { setId };
       fragment.append(starsCreate());
@@ -113,7 +42,7 @@ function render() {
             'click',
             (() => {
               const { cardId } = cardEl.closest('.set-card').dataset;
-              const { audioSrc } = setData.get(setId).cards.find(({ word }) => word === cardId);
+              const { audioSrc } = setsData.get(setId).cards.find(({ word }) => word === cardId);
               const audioWord = new Audio(`/assets/${audioSrc}`);
               return () => document.body.classList.contains('train') && audioWord.play();
             })()
@@ -170,40 +99,7 @@ function render() {
   callbackAfterCreating();
 }
 
-export function navigateToSet(event, { setId, setName, page }) {
-  event?.preventDefault?.();
-  history.pushState({ setId, page }, setName);
-  render();
-}
-
-function randomNumbersArray() {
-  const randomArray = new Set();
-  const currentSet = setData.get(history.state.setId).cards;
-  while (randomArray.size < currentSet.length) randomArray.add(parseInt(Math.random() * currentSet.length)); // currenSet[...].word
-  return randomArray;
-}
-
-function toggleThemes(el) {
-  const { body } = document;
-  if (el.classList.contains('green')) {
-    el.classList.remove('green');
-    el.classList.add('orange');
-    if (body.classList.contains(el.dataset.on)) {
-      body.classList.remove(el.dataset.on);
-      render();
-    }
-    body.classList.add(el.dataset.off);
-  } else if (el.classList.contains('orange')) {
-    el.classList.remove('orange');
-    el.classList.add('green');
-    if (body.classList.contains(el.dataset.off)) {
-      body.classList.remove(el.dataset.off);
-      render();
-    }
-    body.classList.add(el.dataset.on);
-  }
-}
-
+//TODO: replace to addEventListeners
 [navigateToSet, toggleThemes].forEach((func) => {
   window[func.name] = func;
 });
@@ -231,23 +127,6 @@ function toggleActiveHeaderLink({ url }) {
   const newLink = document.querySelector(`.header-navigation .header-link[href="${url}"]`);
   if (prevLink) prevLink.classList.remove(activeClass);
   if (newLink) newLink.classList.add(activeClass);
-}
-
-function createRoute({ page, ...params }) {
-  const url = routes[page];
-  if (!Object.keys(params).length) return url;
-  return url.replace(
-    new RegExp(
-      Object.keys(params)
-        .map((param) => `:${param}`)
-        .join('|'),
-      'g'
-    ),
-    (match) => {
-      const paramKey = match.substring(1);
-      return params[paramKey];
-    }
-  );
 }
 
 toggleMenuInput.addEventListener('click', (inputEvent) => {

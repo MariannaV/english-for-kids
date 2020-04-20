@@ -11,7 +11,7 @@ gulp.task('pug-to-html', () =>
     .pipe(
       require('gulp-pug')({
         pretty: '\t',
-        locals: { require, createRoute: require('./src/components/navigation.js').createRoute },
+        locals: { createRoute: require('./src/components/header/header.js').createRoute },
       })
     )
     .pipe(gulp.dest('public'))
