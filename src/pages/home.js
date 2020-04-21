@@ -13,16 +13,32 @@ export const pageHome = {
 
     return mainPageContainer;
   },
-  afterCreating: () => {
-    document.querySelectorAll('.category-card').forEach((card) => {
-      card.addEventListener('click', (event) => {
-        const { setId } = card.dataset;
-        navigateToSet(event, {
-          page: pages.sets,
-          setId,
-          setName: wordSets[setId],
-        });
-      });
-    });
+  afterCreating() {
+    listenCards();
   },
 };
+function listenCards() {
+  const mainPageContainer = document.querySelector('.main-container');
+  mainPageContainer.addEventListener('click', (event) => {
+    const { target: activeEl } = event;
+    const card = (() => {
+      switch (true) {
+        case activeEl.classList.contains('category-card'):
+          return activeEl;
+        case !!activeEl.closest('.category-card'):
+          return activeEl.closest('.category-card');
+        default:
+          return undefined;
+      }
+    })();
+
+    if (!card) return;
+
+    const { setId } = card.dataset;
+    navigateToSet(event, {
+      page: pages.sets,
+      setId,
+      setName: wordSets[setId],
+    });
+  });
+}
