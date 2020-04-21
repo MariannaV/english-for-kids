@@ -1,8 +1,8 @@
 import { pages, pageSettings } from '../components/data.js';
 import { navigateToSet, createRoute } from '../components/navigation.js';
-import { toggleThemes } from '../components/game/index.js';
 import { pageHome } from './home.js';
 import { pageSets } from './sets.js';
+import { toggleGameModes } from '../components/game/index.js';
 
 window.onload = () => {
   render();
@@ -50,7 +50,7 @@ export function render() {
 }
 
 //TODO: replace to addEventListeners
-[navigateToSet, toggleThemes].forEach((func) => {
+[navigateToSet, toggleGameModes].forEach((func) => {
   window[func.name] = func;
 });
 

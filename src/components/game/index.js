@@ -82,27 +82,17 @@ export function startGameButtonCreate() {
   button.innerText = 'Start game';
   return button;
 }
-
-export function toggleThemes(el) {
+export function toggleGameModes(el) {
   const { body } = document;
-  //TODO: refactor it
-  if (el.classList.contains('green')) {
-    el.classList.remove('green');
-    el.classList.add('orange');
-    if (body.classList.contains(el.dataset.on)) {
-      body.classList.remove(el.dataset.on);
-      render();
-    }
-    body.classList.add(el.dataset.off);
-  } else if (el.classList.contains('orange')) {
-    el.classList.remove('orange');
-    el.classList.add('green');
-    if (body.classList.contains(el.dataset.off)) {
-      body.classList.remove(el.dataset.off);
-      render();
-    }
-    body.classList.add(el.dataset.on);
-  }
+  const { on: modeGameOn, off: modeGameOff } = el.dataset;
+  const [activeMode, nextMode] = el.classList.contains(modeGameOn)
+    ? [modeGameOn, modeGameOff]
+    : [modeGameOff, modeGameOn];
+  [el, body].forEach((item) => {
+    item.classList.remove(activeMode);
+    item.classList.add(nextMode);
+  });
+  render();
 }
 
 export function randomNumbersArray() {
