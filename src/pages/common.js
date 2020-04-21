@@ -1,14 +1,8 @@
-import { pages, pageSettings, setsData } from '../components/data.js';
+import { pages, pageSettings } from '../components/data.js';
 import { navigateToSet, createRoute } from '../components/navigation.js';
-import { cardsCreate } from '../components/cards/index.js';
-import {
-  gameHandlers,
-  startGameButtonCreate,
-  starsCreate,
-  toggleThemes,
-  randomNumbersArray,
-} from '../components/game/index.js';
+import { toggleThemes } from '../components/game/index.js';
 import { pageHome } from './home.js';
+import { pageSets } from './sets.js';
 
 window.onload = () => {
   render();
@@ -29,55 +23,11 @@ export function render() {
 
   switch (page) {
     case pages.sets: {
-      //TODO: refactor as case 'home'
       const { setId } = history.state;
+      fragment.appendChild(pageSets.onCreate());
       pageTitleArgs = { setId };
-      fragment.append(starsCreate());
-      fragment.appendChild(cardsCreate());
-      fragment.appendChild(startGameButtonCreate());
       activeURL = createRoute({ page, setId });
-      callbackAfterCreating = () => {
-        document.querySelectorAll('.set-card .front img').forEach((cardEl) => {
-          cardEl.addEventListener(
-            'click',
-            (() => {
-              const { cardId } = cardEl.closest('.set-card').dataset;
-              const { audioSrc } = setsData.get(setId).cards.find(({ word }) => word === cardId);
-              const audioWord = new Audio(`/assets/${audioSrc}`);
-              return () => document.body.classList.contains('train') && audioWord.play();
-            })()
-          );
-          cardEl
-            .closest('.set-card')
-            .querySelector('.rotate-block')
-            .addEventListener('click', () => cardEl.closest('.set-card').classList.add('rotate'));
-          cardEl
-            .closest('.set-card')
-            .addEventListener('mouseleave', () => cardEl.closest('.set-card').classList.remove('rotate'));
-        });
-
-        // let gameStorage = window.localStorage()
-        const startGameButton = document.querySelector('.game-button');
-        startGameButton.addEventListener(
-          'click',
-          (() => {
-            const handlers = gameHandlers({ orderList: randomNumbersArray() });
-            // смотреть на класс/переменную игра идёт на body
-            return () => {
-              if (startGameButton.classList.contains('game-button'))
-                document.querySelectorAll('.set-card').forEach((el, index) =>
-                  el.addEventListener('click', () => {
-                    handlers.check(el, index);
-                  })
-                );
-
-              startGameButton.classList.add('repeat-button');
-              startGameButton.classList.remove('game-button');
-              handlers.audioWord.play();
-            };
-          })()
-        );
-      };
+      callbackAfterCreating = pageSets.afterCreating;
       break;
     }
 
