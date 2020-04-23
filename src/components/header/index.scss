@@ -1,0 +1,198 @@
+@import '../../components/variables.scss';
+/*----------HEADER----------*/
+
+header {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  min-height: 40px;
+  @media (min-width: $tablet-small) {
+    max-width: 650px;
+    margin: 0 auto;
+  }
+  @media (min-width: $desktop-small) {
+    max-width: 1000px;
+  }
+  @media (min-width: $desktop) {
+    max-width: 1440px;
+  }
+}
+
+label[for='toggle-menu'] {
+  position: relative;
+  z-index: 3;
+  cursor: pointer;
+}
+
+#toggle-menu {
+  display: none;
+
+  &:checked {
+    & + label[for='toggle-menu'] {
+      position: fixed;
+    }
+
+    & + label[for='toggle-menu'] .toggle-menu-label {
+      > line {
+        transition: transform 0.3s, opacity 0.3s;
+
+        &:first-child {
+          transform: rotate(45deg) translate(2px, -2px);
+        }
+
+        &:nth-child(2) {
+          opacity: 0;
+        }
+
+        &:nth-child(3) {
+          transform: rotate(-45deg) translate(-13px, -4px);
+        }
+      }
+    }
+  }
+
+  &:not(:checked) {
+    & ~ .header-navigation {
+      transform: translate(-100%);
+    }
+  }
+}
+
+.header-link {
+  &.active {
+    text-decoration: underline;
+  }
+}
+
+.toggle-menu-label {
+  transform: translateY(50%);
+
+  & > line {
+    stroke-width: 3;
+    stroke: rgb(205, 205, 205);
+  }
+}
+
+.play .header-navigation {
+  --headerBackground: linear-gradient(40deg, $colorYellow, $colorPink);
+}
+
+.train .header-navigation {
+  --headerBackground: linear-gradient(40deg, $colorGreenLight, $colorGreenDark);
+}
+
+.header-navigation {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  max-width: 380px;
+  height: 100vh;
+  padding: 85px 50px 50px;
+  color: $colorWhite;
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+  z-index: 2;
+  background: var(--headerBackground);
+  @media (min-width: 1024px) {
+    padding: 125px 50px 50px;
+  }
+
+  & a {
+    font-size: 24px;
+    cursor: pointer;
+    color: inherit;
+  }
+
+  & a + a {
+    margin-top: 15px;
+  }
+}
+
+.header-navigation-wrapper {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: 100%;
+}
+
+.toggle-button-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.train .toggle-button-block {
+  --toggleButtonBackground: linear-gradient(40deg, $colorGreenLight, $colorGreenDark);
+}
+
+.play .toggle-button-block {
+  --toggleButtonBackground: linear-gradient(40deg, $colorYellow, $colorPink);
+}
+
+.toggle-button-block {
+  background: var(--toggleButtonBackground);
+  padding: 5px 10px;
+  border: 1px solid rgb(238, 238, 238);
+  border-radius: 5px;
+  cursor: pointer;
+
+  &::before {
+    content: attr(data-on);
+  }
+
+  &::after {
+    opacity: 0;
+    content: attr(data-off);
+  }
+
+  &::before,
+  &::after {
+    text-transform: uppercase;
+    font-size: 24px;
+    color: $colorWhite;
+  }
+}
+
+#toggle-button {
+  display: none;
+
+  &:checked ~ .toggle-button-block {
+    &::after {
+      opacity: 1;
+    }
+
+    &::before {
+      opacity: 0;
+    }
+  }
+
+  &:checked ~ .toggle-button-handle {
+    left: 4px;
+  }
+}
+
+.toggle-button-handle {
+  position: absolute;
+  top: 4px;
+  left: calc(100% - 37px);
+  width: 33px;
+  height: 33px;
+  transition: left 0.3s, right 0.3s;
+  pointer-events: none;
+  box-shadow: rgba(0, 0, 0, 0.2) -1px 1px 5px;
+  background: linear-gradient($colorWhite 40%, $colorGrayLight) $colorWhite;
+  border-radius: 5px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px inset;
+    margin: -6px 0 0px -6px;
+    background: linear-gradient($colorGrayLight, $colorWhite);
+    border-radius: 6px;
+  }
+}
