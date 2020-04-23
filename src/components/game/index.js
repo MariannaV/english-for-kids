@@ -82,7 +82,8 @@ export function startGameButtonCreate() {
   button.innerText = 'Start game';
   return button;
 }
-export function toggleGameModes(el) {
+export function toggleGameModes(event) {
+  const { target: el } = event;
   const { body } = document;
   const { on: modeGameOn, off: modeGameOff } = el.dataset;
   const [activeMode, nextMode] = el.classList.contains(modeGameOn)

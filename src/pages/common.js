@@ -1,4 +1,4 @@
-import { pages, pageSettings } from '../components/data.js';
+import { pages, pageSettings, routes } from '../components/data.js';
 import { navigateToSet, createRoute } from '../components/navigation.js';
 import { pageHome } from './home.js';
 import { pageSets } from './sets.js';
@@ -6,6 +6,8 @@ import { toggleGameModes } from '../components/game/index.js';
 
 window.onload = () => {
   render();
+  listenHeaderLinks();
+  listenGameButton();
 };
 
 window.onpopstate = () => {
@@ -49,10 +51,29 @@ export function render() {
   callbackAfterCreating();
 }
 
-//TODO: replace to addEventListeners
-[navigateToSet, toggleGameModes].forEach((func) => {
-  window[func.name] = func;
-});
+function listenHeaderLinks() {
+  const headerContainer = document.querySelector('.header-navigation-wrapper');
+  headerContainer.addEventListener('click', (event) => {
+    const { target: activeEl } = event;
+    const isLink = activeEl.classList.contains('header-link');
+
+    if (isLink) {
+      const { pathname } = new URL(activeEl.href);
+      for (const route of Object.keys(routes)) {
+        const { pattern } = routes[route];
+        if (pattern.test(pathname)) {
+          navigateToSet(event, { page: route, ...pattern.exec(pathname).groups });
+          return;
+        }
+      }
+    }
+  });
+}
+
+function listenGameButton() {
+  const gameButton = document.querySelector('header .toggle-button-block');
+  gameButton.addEventListener('click', toggleGameModes);
+}
 
 /* HEADER NAVIGATION: START */
 const toggleMenuInput = document.getElementById('toggle-menu');

@@ -8,7 +8,7 @@ export function navigateToSet(event, { setId, setName, page }) {
 }
 
 export function createRoute({ page, ...params }) {
-  const urlPattern = routes[page];
+  const urlPattern = routes[page].source;
   if (!Object.keys(params).length) return urlPattern;
   return urlPattern.replace(
     new RegExp(

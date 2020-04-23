@@ -4,8 +4,8 @@ export const pages = {
 };
 
 export const routes = {
-  home: '/home',
-  sets: '/sets/:setId',
+  home: { source: '/home', pattern: /\/home/ },
+  sets: { source: '/sets/:setId', pattern: /\/sets\/(?<setId>[a-z0-9-]+)\/?/i },
 };
 
 export const wordSets = {

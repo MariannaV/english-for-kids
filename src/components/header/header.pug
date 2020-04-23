@@ -1,8 +1,6 @@
 mixin header-link(data)
     - const { setId, text: setName, page } = data
-    a.header-link(
-        href=`${createRoute({page, setId})}`
-        onclick=`navigateToSet(event, ${JSON.stringify({ setId, setName, page })})`) #{setName}
+    a.header-link(href=`${createRoute({page, setId})}`) #{setName}
 
 mixin header()
     header
@@ -26,5 +24,5 @@ mixin header()
         .toggle-button-container
             label(for="toggle-button")
                 input(id="toggle-button" type="checkbox")
-                .toggle-button-block.train(onclick='toggleGameModes(this)' data-on='train' data-off='play')
+                .toggle-button-block.train(data-on='train' data-off='play')
                 .toggle-button-handle
