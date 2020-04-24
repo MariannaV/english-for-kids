@@ -15,8 +15,8 @@
     "develop": "gulp",
     "format:fix": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint:fix": "eslint --fix ./src && stylelint --fix './src/**/*.{css,scss}'",
-    "lint:check": "eslint ./src && stylelint './src/**/*.{css,scss}'",
+    "lint:fix": "eslint --fix ./src",
+    "lint:check": "eslint ./src",
     "build": "gulp build",
     "server": "yarn serve public",
     "upgrade-packages": "ncu -ui"
@@ -29,9 +29,6 @@
   },
   "eslintConfig": {
     "extends": "./configs/linters/.eslintrc.js"
-  },
-  "stylelint": {
-    "extends": "./configs/linters/.stylelintrc.js"
   },
   "babel": {
     "extends": "./configs/babelrc.js"
@@ -81,14 +78,14 @@
   "optionalDependencies": {
     "husky": "4.2.5",
     "npm-check-updates": "4.1.2",
-    "prettier": "2.0.4"
+    "prettier": "2.0.5"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MariannaV/success"
+    "url": "https://github.com/MariannaV/english-for-kids"
   },
   "bugs": {
-    "url": "https://github.com/MariannaV/success/issues"
+    "url": "https://github.com/MariannaV/english-for-kids/issues"
   }
 }
