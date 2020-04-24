@@ -15,11 +15,6 @@ export const wordSetCards = {
   },
 };
 
-export const wordCards = {
-  // cardCreate:
-  // cardsCreate
-};
-
 export function cardsCreate() {
   const cardsContainer = document.createElement('div');
   cardsContainer.classList.add('categories-container');
