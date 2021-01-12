@@ -18,7 +18,7 @@ module.exports = {
     'no-restricted-globals': 0,
     'no-plusplus': 0,
     'no-unused-expressions': 1,
-    'one-var': 0,
+    'no-restricted-syntax': 0,
     radix: ['error', 'as-needed'],
     'spaced-comment': 0,
     'import/no-extraneous-dependencies': 0, //because of Yarn Workspaces

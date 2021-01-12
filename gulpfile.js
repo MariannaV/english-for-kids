@@ -1,9 +1,7 @@
-'use strict';
-
-const gulp = require('gulp'),
-  newer = require('gulp-newer'),
-  plumber = require('gulp-plumber'),
-  notify = require('gulp-notify');
+const gulp = require('gulp');
+const newer = require('gulp-newer');
+const plumber = require('gulp-plumber');
+const notify = require('gulp-notify');
 
 gulp.task('pug-to-html', () =>
   gulp
@@ -13,7 +11,7 @@ gulp.task('pug-to-html', () =>
     .pipe(
       require('gulp-pug')({
         pretty: '\t',
-        locals: { require, createRoute: require('./src/components/navigation.js').createRoute },
+        locals: { createRoute: require('./src/components/header/header.js').createRoute },
       })
     )
     .pipe(gulp.dest('public'))
@@ -50,9 +48,9 @@ gulp.task('assets', () =>
     .pipe(gulp.dest('public/assets/'))
 );
 
-const postcss = require('gulp-postcss'),
-  sourcemaps = require('gulp-sourcemaps'),
-  rename = require('gulp-rename');
+const postcss = require('gulp-postcss');
+const sourcemaps = require('gulp-sourcemaps');
+const rename = require('gulp-rename');
 
 gulp.task('css', () =>
   gulp
@@ -77,6 +75,7 @@ gulp.task('fonts', () =>
     .pipe(gulp.dest('public/styles/fonts/'))
 );
 
+const browserSync = require('browser-sync').create();
 const compileJS = require('gulp-babel')(require('./configs/babelrc.js'));
 
 gulp.task('js', () =>
@@ -118,14 +117,13 @@ gulp.task('сss-optim', () =>
     .pipe(gulp.dest('public'))
 );
 
-const browserSync = require('browser-sync').create();
 gulp.task('reload', (done) => {
   browserSync.reload();
   done();
 });
 
-const compileAll = gulp.parallel(gulp.series('fonts', 'img', 'css'), 'assets', 'js', 'pug-to-html', 'html'),
-  cleanBuildFolder = async () => await require('del')(['./public']);
+const compileAll = gulp.parallel(gulp.series('fonts', 'img', 'css'), 'assets', 'js', 'pug-to-html', 'html');
+const cleanBuildFolder = async () => await require('del')(['./public']);
 
 gulp.task(
   'default',

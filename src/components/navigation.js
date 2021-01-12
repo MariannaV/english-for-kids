@@ -1,10 +1,16 @@
-const routes = {
-  home: '/home',
-  sets: '/sets/:setId',
-};
+import { routes } from './data.js';
+import { render } from '../pages/common.js';
 
-function createRoute({ page, ...params }) {
-  return routes[page].replace(
+export function navigateToSet(event, { setId, setName, page }) {
+  event?.preventDefault?.();
+  history.pushState({ setId, page }, setName);
+  render();
+}
+
+export function createRoute({ page, ...params }) {
+  const urlPattern = routes[page].source;
+  if (!Object.keys(params).length) return urlPattern;
+  return urlPattern.replace(
     new RegExp(
       Object.keys(params)
         .map((param) => `:${param}`)
@@ -17,7 +23,3 @@ function createRoute({ page, ...params }) {
     }
   );
 }
-
-module.exports = {
-  createRoute,
-};

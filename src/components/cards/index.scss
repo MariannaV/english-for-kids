@@ -1,0 +1,162 @@
+@import '../../components/variables.scss';
+
+/*----------MAIN PAGE: CARDS----------*/
+.categories-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  grid-gap: 20px;
+  justify-content: space-around;
+  padding: 20px 0;
+  margin: 0 auto;
+
+  @media (max-width: $tablet-medium) {
+    grid-template-columns: repeat(auto-fill, 280px);
+  }
+  @media (min-width: 630px) {
+    justify-content: space-between;
+    max-width: 650px;
+  }
+  @media (min-width: $desktop-small) {
+    max-width: 1000px;
+  }
+  @media (min-width: $desktop) {
+    max-width: 1440px;
+  }
+}
+
+.main-container {
+  margin-top: 40px;
+}
+
+.train .category-card {
+  --cardBackground: linear-gradient(180deg, $colorGreenDark, $colorGreenLight 40%, $colorWhite 0, $colorWhite);
+}
+
+.play .category-card {
+  --cardBackground: linear-gradient(180deg, $colorPink, $colorOrange 40%, $colorWhite 0, $colorWhite);
+}
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  height: 280px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: box-shadow 0.3s;
+  background: var(--cardBackground);
+  @media (max-width: $tablet-medium) {
+    width: 280px;
+  }
+
+  &:hover {
+    box-shadow: 0 10px 20px $colorBlackTransparent;
+  }
+
+  & > img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 10px solid $colorWhite;
+    object-fit: cover;
+    margin: 30px auto;
+  }
+
+  & > p {
+    font-size: 24px;
+  }
+}
+
+/*----------CONTENT PAGE: CARDS----------*/
+
+.play .set-card {
+  border-radius: 5px;
+  box-shadow: 0 1px 2px 0 $colorBlackTransparent;
+  cursor: pointer;
+
+  &.inactive {
+    filter: opacity(0.5);
+    pointer-events: none;
+    cursor: auto;
+  }
+
+  & .front {
+    & > img {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    & > p,
+    div {
+      display: none;
+    }
+  }
+}
+
+.set-card {
+  position: relative;
+  width: 300px;
+  height: 250px;
+  perspective: 1000px;
+
+  @media (max-width: $tablet-medium) {
+    width: 280px;
+  }
+
+  & .back {
+    transform: rotateY(180deg);
+  }
+
+  & .front,
+  & .back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: 1s;
+    backface-visibility: hidden;
+    box-shadow: 0 1px 2px 0 $colorBlackTransparent;
+
+    &:hover {
+      box-shadow: 0 10px 20px $colorBlackTransparent;
+    }
+
+    & > p {
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+    }
+  }
+
+  &.rotate .front {
+    transform: rotateY(180deg);
+  }
+
+  &.rotate .back {
+    transform: rotateY(360deg);
+  }
+
+  & img {
+    max-width: 100%;
+  }
+
+  .rotate-block {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 25px;
+    height: 25px;
+    background-image: url('../../img/icons/rotate-icon.svg');
+    background-size: cover;
+    cursor: pointer;
+  }
+}

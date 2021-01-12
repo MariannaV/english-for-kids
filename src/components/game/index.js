@@ -1,5 +1,6 @@
-import { setData } from '../cards/index.js';
-import { navigateToSet, pages } from '../../pages/common.js';
+import { setsData, pages } from '../data.js';
+import { navigateToSet } from '../navigation.js';
+import { render } from '../../pages/common.js';
 
 export function gameHandlers({ orderList }) {
   let currentIndex = 0;
@@ -16,7 +17,7 @@ export function gameHandlers({ orderList }) {
       return [...orderList][currentIndex];
     },
     get audioWord() {
-      return new Audio(`/assets/${setData.get(history.state.setId).cards[this.currentId].audioSrc}`);
+      return new Audio(`/assets/${setsData.get(history.state.setId).cards[this.currentId].audioSrc}`);
     },
     next() {
       currentIndex++;
@@ -80,4 +81,24 @@ export function startGameButtonCreate() {
   button.classList.add('button', 'game-button');
   button.innerText = 'Start game';
   return button;
+}
+export function toggleGameModes(event) {
+  const { target: el } = event;
+  const { body } = document;
+  const { on: modeGameOn, off: modeGameOff } = el.dataset;
+  const [activeMode, nextMode] = el.classList.contains(modeGameOn)
+    ? [modeGameOn, modeGameOff]
+    : [modeGameOff, modeGameOn];
+  [el, body].forEach((item) => {
+    item.classList.remove(activeMode);
+    item.classList.add(nextMode);
+  });
+  render();
+}
+
+export function randomNumbersArray() {
+  const randomArray = new Set();
+  const currentSet = setsData.get(history.state.setId).cards;
+  while (randomArray.size < currentSet.length) randomArray.add(parseInt(Math.random() * currentSet.length)); // currenSet[...].word
+  return randomArray;
 }
